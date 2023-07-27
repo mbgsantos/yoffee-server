@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 
 // Create a new service
 router.post('/services/create', async (req, res, next) => {
-    const {name, address} = req.body;
+    const {name, description, address} = req.body;
 
     try {
         const newService = await Service.create({
-            name, address
+            name, description, address
         });
 
         res.json(newService);
@@ -29,7 +29,7 @@ router.get('/services', async (req, res, next) => {
     }
 });
 
-// Retrieves a specific project by id
+// Retrieves a specific service by id
 router.get('/services/:id', async (req, res, next) => {
     const {id} = req.params;
 
@@ -52,10 +52,10 @@ router.get('/services/:id', async (req, res, next) => {
     }
 });
 
-// Edits a specific service
+// Edit a specific service
 router.put('/services/:id', async (req, res, next) => {
     const {id} = req.params;
-    const {name, address} = req.body;
+    const {name, description, address} = req.body;
 
     try {
         // check if id is valid
@@ -65,6 +65,7 @@ router.put('/services/:id', async (req, res, next) => {
 
         const updatedService = await Service.findByIdAndUpdate(id, {
             name,
+            description,
             address
         }, {new: true});
 

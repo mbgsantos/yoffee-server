@@ -7,6 +7,9 @@ const activitySchema = new Schema(
             required: [true, 'Name is required.'],
             unique: true,
         },
+        description: {
+            type: String,
+        },
         address: {
             street: {
                 type: String,

@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 
 // Create a new activity
 router.post('/activities/create', async (req, res, next) => {
-    const {name, address} = req.body;
+    const {name, description, address} = req.body;
 
     try {
         const newActivity = await Activity.create({
-            name, address
+            name, description, address
         });
 
         res.json(newActivity);
@@ -55,7 +55,7 @@ router.get('/activities/:id', async (req, res, next) => {
 // Edits a specific activity by id
 router.put('/activities/:id', async (req, res, next) => {
     const {id} = req.params;
-    const {name, address} = req.body;
+    const {name, description, address} = req.body;
 
     try {
         // check if id is valid
@@ -65,6 +65,7 @@ router.put('/activities/:id', async (req, res, next) => {
 
         const updatedActivity = await Activity.findByIdAndUpdate(id, {
             name,
+            description,
             address
         }, {new: true});
 
@@ -80,7 +81,7 @@ router.put('/activities/:id', async (req, res, next) => {
 });
 
 // deletes a specific activity by id
-router.delete('activities/:id', async (req, res, next) => {
+router.delete('/activities/:id', async (req, res, next) => {
     const {id} = req.params;
 
     try {
@@ -89,9 +90,10 @@ router.delete('activities/:id', async (req, res, next) => {
             return res.status(400).json({message: 'Specified id is not valid'});
         }
 
-        await Activity.findByIdAndDelete(id);
+        await Activity.findByIdAndDelete(id)
         res.json({message: `Project with id ${id} was deleted successfully`});
     } catch (error) {
+        console.log(error);
         console.log('An error occurred deleting the project', error)
         next(error);
     }

@@ -67,6 +67,7 @@
 ```js
 {
     name: String,
+    description: String,
     address: {
         street: String,
         city: String,
